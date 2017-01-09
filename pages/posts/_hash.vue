@@ -29,35 +29,21 @@ import marked from '../../utils/render';
 export default {
   name: 'post-view',
 
-  data() {
-    return {
-      title: '',
-      date: null,
-      content: '',
-    };
+  data({ params }) {
+    return api.getDetail(params.hash)
+      .then((data) => {
+        const content = fm(data);
+        return {
+          title: content.attributes.title,
+          content: content.body,
+          date: content.attributes.date,
+        }
+      });
   },
 
   computed: {
     htmlFromMarkdown() {
       return marked(this.content);
-    },
-  },
-
-  created() {
-    this.loadPost();
-  },
-
-  methods: {
-    loadPost() {
-      api.getDetail(this.$route.params.hash)
-        .then((text) => {
-          const content = fm(text);
-          this.content = content.body;
-          this.title = content.attributes.title;
-          this.date = content.attributes.date;
-        })
-        // eslint-disable-next-line
-        .catch(err => console.log(err));
     },
   },
 };
