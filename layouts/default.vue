@@ -40,9 +40,9 @@ export default {
   watch: {
     keyword() {
       if (this.keyword) {
-        this.$router.push({ name: 'list', query: { keyword: this.keyword } });
+        this.$router.push({ name: 'index', query: { keyword: this.keyword } });
       } else {
-        this.$router.push({ name: 'list' });
+        this.$router.push({ name: 'index' });
       }
     },
   },
