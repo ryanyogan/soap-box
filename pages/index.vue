@@ -3,9 +3,9 @@
     <div v-if="!lists">Loading...</div>
     <ol v-if="lists" class="list">
       <li v-for="{ title, sha, date } in filteredList" :key="sha" class="list-item">
-        <router-link :to="`/post/${sha}`" class="item-title">
+        <nuxt-link :to="`/posts/${sha}`" class="item-title">
           {{ title }}
-        </router-link>
+        </nuxt-link>
         <br />
 
         <time
