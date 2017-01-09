@@ -33,28 +33,8 @@ const getPostUrl = hash => (
   `${API}/repos/${conf.repo}/git/blobs/${hash}`
 );
 
-const setSession = (key, list) => (
-  window.sessionStorage &&
-    window.sessionStorage.setItem(key.toString(), JSON.stringify(list))
-);
-
-const getSession = key => (
-  window.sessionStorage &&
-    window.sessionStorage.getItem(key.toString())
-);
-
-const sessionLookup = key => (
-  window.sessionStorage &&
-    // eslint-disable-next-line
-    window.sessionStorage.hashOwnProperty(key.toString())
-);
-
 export default {
   getList() {
-    if (sessionLookup('list')) {
-      return Promise.resolve(JSON.parse(getSession('list')));
-    }
-
     return axios.get(getListUrl())
       .then(res => res.data)
       .then((data) => {
@@ -65,7 +45,6 @@ export default {
           size,
         }));
 
-        setSession('list', list);
         return list;
       });
   },
@@ -76,15 +55,7 @@ export default {
     };
     const cacheKey = `post.${hash}`;
 
-    if (sessionLookup(cacheKey)) {
-      return Promise.resolve(JSON.parse(getSession(cacheKey)));
-    }
-
     return axios.get(getPostUrl(hash), headers)
-      .then(res => res.data)
-      .then((content) => {
-        setSession(cacheKey, content);
-        return content;
-      });
+      .then(res => res.data);
   },
 };
