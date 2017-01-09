@@ -1,52 +1,51 @@
 <template>
-  <div>
-    <nuxt/>
-    <my-footer/>
+  <div id="app">
+    <header class="header">
+      <router-link to="/">{{title}}</router-link>
+      <div style="clear: both;"></div>
+      <input class="search-bar" placeholder="Search..."
+        ref="searchBar" v-model="keyword"
+        @click="selectSearchText"
+        @keyup.esc="resetSearch"
+      />
+    </header>
+    <nuxt />
   </div>
 </template>
 
+<style lang="stylus" src="../assets/styles/index.styl"></style>
+
 <script>
-import MyFooter from '~components/Footer.vue'
+import conf from '../config.json';
 
 export default {
-  components: {
-    MyFooter
-  }
-}
+  name: 'default',
+
+  data() {
+    return {
+      title: conf.blogTitle,
+      keyword: '',
+    };
+  },
+
+  methods: {
+    resetSearch() {
+      this.keyword = '';
+      this.$refs.searchBar.blur();
+    },
+    selectSearchText() {
+      this.$refs.searchBar.select();
+    },
+  },
+
+  watch: {
+    keyword() {
+      if (this.keyword) {
+        this.$router.push({ name: 'list', query: { keyword: this.keyword } });
+      } else {
+        this.$router.push({ name: 'list' });
+      }
+    },
+  },
+};
 </script>
-
-<style>
-.container
-{
-  margin: 0;
-  width: 100%;
-  padding: 100px 0;
-  text-align: center;
-}
-
-.button, .button:visited
-{
-  display: inline-block;
-  color: #3B8070;
-  letter-spacing: 1px;
-  background-color: #fff;
-  border: 2px solid #3B8070;
-  text-decoration: none;
-  text-transform: uppercase;
-  padding: 15px 45px;
-}
-
-.button:hover, .button:focus
-{
-  color: #fff;
-  background-color: #3B8070;
-}
-
-.title
-{
-  color: #505153;
-  font-weight: 300;
-  font-size: 2.5em;
-  margin: 0;
-}
-</style>

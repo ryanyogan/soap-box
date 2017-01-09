@@ -6,7 +6,6 @@
   "private": true,
   "dependencies": {
     "axios": "^0.15.3",
-    "es6-promise": "^4.0.5",
     "front-matter": "^2.1.1",
     "normalize.css": "^5.0.0",
     "nuxt": "latest",

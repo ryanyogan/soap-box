@@ -1,6 +1,5 @@
 
 import axios from 'axios';
-import 'es6-promise/auto';
 
 import conf from '../config.json';
 import { onlyTitle, onlyDate } from '../utils';
@@ -12,7 +11,7 @@ const API = 'https://api.github.com';
  * @returns {string}
  */
 const getListUrl = () => {
-  const url = `${API}/repos/${conf.repo}/contents/`;
+  let url = `${API}/repos/${conf.repo}/contents/`;
 
   if (conf.path) {
     url += conf.path;
