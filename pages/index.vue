@@ -2,7 +2,7 @@
   <section class="list-view">
     <div v-if="!lists">Loading...</div>
     <ol v-if="lists" class="list">
-      <li v-for="{ title, sha, date } in filteredList" :key="sha" class="list-item">
+      <li v-for="{ title, sha, date } in filteredList" track-by="sha" class="list-item">
         <nuxt-link :to="`/posts/${sha}`" class="item-title">
           {{ title }}
         </nuxt-link>
