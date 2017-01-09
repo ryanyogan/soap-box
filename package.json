@@ -5,12 +5,23 @@
   "author": "Ryan Yogan <ryanyogan@gmail.com>",
   "private": true,
   "dependencies": {
-    "nuxt": "latest"
+    "axios": "^0.15.3",
+    "es6-promise": "^4.0.5",
+    "front-matter": "^2.1.1",
+    "normalize.css": "^5.0.0",
+    "nuxt": "latest",
+    "prismjs": "^1.6.0",
+    "timeago.js": "^2.0.4"
   },
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate"
+  },
+  "devDependencies": {
+    "json-loader": "^0.5.4",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^2.4.0"
   }
 }
