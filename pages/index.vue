@@ -36,7 +36,6 @@ export default {
     return api.getList()
       .then(lists => ({
         lists,
-        date: null,
       }))
       .catch(err => console.log(err));
   },
