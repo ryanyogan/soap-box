@@ -9,7 +9,7 @@
         <br />
 
         <time
-          :pubdate="pubdate"
+          pubdate="pubdate"
           :datetime="date | formatDate"
           :title="date | formatDate"
           class="item-date"

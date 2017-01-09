@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header class="header">
-      <router-link to="/">{{title}}</router-link>
+      <nuxt-link to="/">{{title}}</nuxt-link>
       <div style="clear: both;"></div>
       <input class="search-bar" placeholder="Search..."
         ref="searchBar" v-model="keyword"
@@ -13,10 +13,9 @@
   </div>
 </template>
 
-<style lang="stylus" src="../assets/styles/index.styl"></style>
-
 <script>
 import conf from '../config.json';
+import '../utils/init';
 
 export default {
   name: 'default',

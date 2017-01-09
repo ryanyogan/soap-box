@@ -18,9 +18,17 @@ module.exports = {
   /*
   ** Global CSS
   */
-  //css: ['~assets/css/main.css'],
+  css: [
+    'normalize.css',
+    { src: '~assets/styles/index.styl', lang: 'stylus' },
+  ],
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#3B8070' }
+  loading: { color: '#3B8070' },
+  build: {
+    vendor: ['axios', 'marked', 'prismjs', 'timeago.js', 'front-matter'],
+  },
+
+
 }
