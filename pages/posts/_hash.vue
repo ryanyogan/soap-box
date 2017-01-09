@@ -41,6 +41,12 @@ export default {
       });
   },
 
+  head() {
+    return {
+      title: `${this.title} - ${conf.blogTitle}`,
+    };
+  },
+
   computed: {
     htmlFromMarkdown() {
       return marked(this.content);
