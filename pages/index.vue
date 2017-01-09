@@ -32,15 +32,13 @@ export default {
     title: conf.blogTitle,
   },
 
-  data() {
-    return {
-      lists: null,
-      date: null,
-    };
-  },
-
-  created() {
-    this.loadList();
+  data({ params }) {
+    return api.getList()
+      .then(lists => ({
+        lists,
+        date: null,
+      }))
+      .catch(err => console.log(err));
   },
 
   computed: {
@@ -51,18 +49,6 @@ export default {
         .filter(item => (item.title.toLowerCase().indexOf(keyword) !== -1))
         .sort((itemA, itemB) => (new Date(itemB.date) - new Date(itemA.date)));
     },
-  },
-
-  methods: {
-    loadList() {
-      api.getList()
-        .then(list => this.lists = list)
-        .catch(err => console.log(err));
-    },
-  },
-
-  watch: {
-    $route: 'loadList',
   },
 };
 </script>
