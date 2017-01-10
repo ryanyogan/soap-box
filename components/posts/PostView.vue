@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import marked from '../../utils/render';
 
 export default {
@@ -38,6 +39,20 @@ export default {
     htmlFromMarkdown() {
       return marked(this.post.content);
     },
+  },
+
+  mounted() {
+    Vue.nextTick(() => {
+      const linksArray = Array.from(document.querySelectorAll('a'));
+      const currentHost = window.location.host;
+
+      linksArray.forEach((el) => {
+        if (el.href && el.host !== currentHost) {
+          el.target = '_blank';
+          el.rel = 'noopener noreferrer';
+        }
+      });
+    });
   },
 };
 </script>
