@@ -1,7 +1,7 @@
 <template>
   <section class="list-view">
-    <div v-if="!lists">Loading...</div>
-    <ol v-if="lists" class="list">
+    <div v-if="!posts">Loading...</div>
+    <ol v-if="posts" class="list">
       <li v-for="{ title, sha, date } in filteredList" track-by="sha" class="list-item">
         <nuxt-link :to="`/posts/${sha}`" class="item-title">
           {{ title }}
@@ -32,11 +32,9 @@ export default {
     title: conf.blogTitle,
   },
 
-  data({ params }) {
-    return api.getList()
-      .then(lists => ({
-        lists,
-      }))
+  data({ isClient, params }) {
+    return api.getList(isClient)
+      .then(posts => ({ posts }))
       .catch(err => console.log(err));
   },
 
@@ -44,7 +42,7 @@ export default {
     filteredList() {
       const keyword = (this.$route.query.keyword || '').toLowerCase();
 
-      return this.lists
+      return this.posts
         .filter(item => (item.title.toLowerCase().indexOf(keyword) !== -1))
         .sort((itemA, itemB) => (new Date(itemB.date) - new Date(itemA.date)));
     },

@@ -33,29 +33,62 @@ const getPostUrl = hash => (
   `${API}/repos/${conf.repo}/git/blobs/${hash}`
 );
 
+const sessionLookup = key => (
+  window.sessionStorage &&
+    window.sessionStorage.hasOwnProperty(key)
+);
+
+const setSession = ({ key, posts }) => (
+  window.sessionStorage &&
+    window.sessionStorage.setItem(key, JSON.stringify(posts))
+);
+
+const getSession = key => (
+  window.sessionStorage &&
+    window.sessionStorage.getItem(key)
+);
+
 export default {
-  getList() {
+  getList(isClient) {
+    if (isClient && sessionLookup('posts')) {
+      return Promise.resolve(JSON.parse(getSession('posts')));
+    }
+
     return axios.get(getListUrl())
       .then(res => res.data)
       .then((data) => {
-        const list = data.map(({ name, sha, size }) => ({
+        const posts = data.map(({ name, sha, size }) => ({
           title: onlyTitle(name),
           date: onlyDate(name),
           sha,
           size,
         }));
 
-        return list;
+        if (isClient) {
+          setSession({ key: 'posts', posts });
+        }
+
+        return posts;
       });
   },
 
-  getDetail(hash) {
+  getDetail(isClient, hash) {
     const headers = {
       headers: { Accept: 'application/vnd.github.v3.raw' },
     };
     const cacheKey = `post.${hash}`;
 
+    if (isClient && sessionLookup(cacheKey)) {
+      return Promise.resolve(JSON.parse(getSession(cacheKey)));
+    }
+
     return axios.get(getPostUrl(hash), headers)
-      .then(res => res.data);
+      .then(res => res.data)
+      .then((content) => {
+        if (isClient) {
+          setSession({ key: cacheKey, posts: content });
+        }
+        return content;
+      });
   },
 };

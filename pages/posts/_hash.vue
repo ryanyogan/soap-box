@@ -29,8 +29,8 @@ import marked from '../../utils/render';
 export default {
   name: 'post-view',
 
-  data({ params }) {
-    return api.getDetail(params.hash)
+  data({ isClient, params }) {
+    return api.getDetail(isClient, params.hash)
       .then((data) => {
         const content = fm(data);
         return {
