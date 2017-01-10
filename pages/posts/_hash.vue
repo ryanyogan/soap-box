@@ -1,33 +1,24 @@
 <template>
-  <section class="post-view">
-    <div v-if="!content">Loading...</div>
-    <h1 class="post-title">
-      {{ title }}
-      <time
-        pubdate="pubdate"
-        :datetime="this.date | formatDate"
-        :title="this.date | formatDate"
-        class="post-date"
-      >
-        {{ this.date | timeago }}
-      </time>
-    </h1>
-    <article
-      v-if="content"
-      v-html="htmlFromMarkdown"
-    ></article>
-  </section>
+  <post-view
+    :content="content"
+    :title="title"
+    :date="date"
+  ></post-view>
 </template>
 
 <script>
-import Vue from 'vue';
 import fm from 'front-matter';
 import api from '../../api';
 import conf from '../../config.json';
-import marked from '../../utils/render';
+
+import PostView from '~components/posts/PostView';
 
 export default {
-  name: 'post-view',
+  name: 'post-hash',
+
+  components: {
+    PostView,
+  },
 
   data({ isClient, params }) {
     return api.getDetail(isClient, params.hash)
@@ -45,12 +36,6 @@ export default {
     return {
       title: `${this.title} - ${conf.blogTitle}`,
     };
-  },
-
-  computed: {
-    htmlFromMarkdown() {
-      return marked(this.content);
-    },
   },
 };
 </script>
