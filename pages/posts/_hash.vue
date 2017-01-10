@@ -25,8 +25,10 @@ export default {
   },
 
   head() {
+    const { attributes } = this.$store.state.post;
+
     return {
-      title: `${this.title} - ${conf.blogTitle}`,
+      title: `${attributes.title} - ${conf.blogTitle}`,
     };
   },
 };
