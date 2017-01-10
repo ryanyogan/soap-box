@@ -1,7 +1,6 @@
 <template>
   <post-list
     v-if="posts"
-    :posts="posts"
   ></post-list>
 </template>
 
@@ -22,10 +21,17 @@ export default {
     PostList,
   },
 
-  data({ isClient, params }) {
+  fetch({ isClient, store, params}) {
     return api.getList(isClient)
-      .then(posts => ({ posts }))
-      .catch(err => console.log(err));
+      .then((res) => {
+        store.commit('setPosts', res);
+      });
+  },
+
+  computed: {
+    posts() {
+      return this.$store.state.posts;
+    },
   },
 };
 </script>

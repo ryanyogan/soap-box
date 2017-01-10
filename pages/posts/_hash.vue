@@ -1,9 +1,5 @@
 <template>
-  <post-view
-    :content="content"
-    :title="title"
-    :date="date"
-  ></post-view>
+  <post-view></post-view>
 </template>
 
 <script>
@@ -20,15 +16,11 @@ export default {
     PostView,
   },
 
-  data({ isClient, params }) {
+  fetch({ isClient, store, params }) {
     return api.getDetail(isClient, params.hash)
       .then((data) => {
         const content = fm(data);
-        return {
-          title: content.attributes.title,
-          content: content.body,
-          date: content.attributes.date,
-        }
+        store.commit('setPost', content);
       });
   },
 

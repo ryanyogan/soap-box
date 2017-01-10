@@ -19,13 +19,15 @@ import PostTime from './PostTime';
 export default {
   name: 'post-list',
 
-  props: ['posts'],
-
   components: {
     PostTime,
   },
 
   computed: {
+    posts() {
+      return this.$store.state.posts;
+    },
+
     filteredPosts() {
       const keyword = (this.$route.query.keyword || '').toLowerCase();
 
